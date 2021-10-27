@@ -25,27 +25,28 @@ public class PlayerVideoTemp extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        resp.setContentType("video/mp4");
         String choose = req.getParameter("item");
-        String realPath = getServletContext().getRealPath("/static/video/" + choose);
-        System.out.println(realPath);
 
-        String[] files = new File(realPath).list();
-        System.out.println(Arrays.toString(files));
-        if (files != null) {
-            List<String> lists = Arrays.asList(files);
+        if (!"".equals(choose)) {
+            String realPath = getServletContext().getRealPath("/static/video/" + choose);
+            System.out.println(realPath);
 
-            lists.sort(new Comparator<String>() {
-                @Override
-                public int compare(String o1, String o2) {
-                    return o1.compareTo(o2);
-                }
-            });
-            System.out.println(lists);
-            req.setAttribute("ver", choose);
-            req.setAttribute("list", lists);
-            req.getRequestDispatcher("/static/jsp/movieList.jsp").forward(req, resp);
+            String[] files = new File(realPath).list();
+
+            if (files != null) {
+                List<String> lists = Arrays.asList(files);
+
+                lists.sort(String::compareTo);
+
+                req.setAttribute("ver", choose);
+                req.setAttribute("list", lists);
+                req.getRequestDispatcher("dynamic/jsp/movieList.jsp").forward(req, resp);
+            }
+        } else {
+            resp.setContentType("text/html;charset=UTF-8");
+            resp.getWriter().write("参数异常");
         }
+
     }
 
 }
