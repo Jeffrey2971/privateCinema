@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>文件上传</title>
+
+    <style type="text/css">
+        body {
+            font-family: Arial, Verdana, sans-serif;
+            width: 330px;
+            margin: 100px auto 0;
+        }
+
+        .btn.blue {
+            background: #2ae;
+            display: block;
+            position: relative;
+            padding: 10px;
+            margin-right: auto;
+            margin-left: auto;
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #6495ed;
+        }
+
+        .uploader {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            cursor: default;
+            padding: 0;
+            margin: 10px 0;
+            -moz-box-shadow: 0 0 5px #ddd;
+            -webkit-box-shadow: 0 0 5px #ddd;
+            box-shadow: 0 0 5px #ddd;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+        }
+
+        .filename {
+            float: left;
+            display: inline-block;
+            outline: 0 none;
+            height: 32px;
+            width: 180px;
+            margin: 0;
+            padding: 8px 10px;
+            overflow: hidden;
+            cursor: default;
+            font: 9pt/100% Arial, Helvetica, sans-serif;
+            color: #777;
+            text-shadow: 1px 1px 0 #fff;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            -moz-border-radius: 5px 0 0 5px;
+            -webkit-border-radius: 5px 0 0 5px;
+            border-radius: 5px 0 0 5px;
+            background: #f5f5f5;
+            background: -moz-linear-gradient(top, #fafafa 0%, #eee 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fafafa), color-stop(100%, #f5f5f5));
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fafafa', endColorstr='#f5f5f5', GradientType=0);
+            border: 1px solid #ccc;
+            border-right-width: 0;
+            -moz-box-shadow: 0 0 1px #fff inset;
+            -webkit-box-shadow: 0 0 1px #fff inset;
+            box-shadow: 0 0 1px #fff inset;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .button {
+            float: left;
+            height: 32px;
+            display: inline-block;
+            outline: 0 none;
+            padding: 8px 12px;
+            margin: 0;
+            cursor: pointer;
+            border: 1px solid;
+            font: bold 9pt/100% Arial, Helvetica, sans-serif;
+            -moz-border-radius: 0 5px 5px 0;
+            -webkit-border-radius: 0 5px 5px 0;
+            border-radius: 0 5px 5px 0;
+            -moz-box-shadow: 0 0 1px #fff inset;
+            -webkit-box-shadow: 0 0 1px #fff inset;
+            box-shadow: 0 0 1px #fff inset;
+        }
+
+        .uploader input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            border: 0;
+            padding: 0;
+            margin: 0;
+            height: 30px;
+            cursor: pointer;
+            filter: alpha(opacity=0);
+            -moz-opacity: 0;
+            -khtml-opacity: 0;
+            opacity: 0;
+        }
+
+        /* White Color Scheme ------------------------ */
+
+        .white .button {
+            color: #555;
+            text-shadow: 1px 1px 0 #fff;
+            background: #ddd;
+            background: -moz-linear-gradient(top, #eeeeee 0%, #dddddd 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #eeeeee), color-stop(100%, #dddddd));
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#dddddd', GradientType=0);
+            border-color: #ccc;
+        }
+
+        .white:hover .button {
+            background: #eee;
+            background: -moz-linear-gradient(top, #dddddd 0%, #eeeeee 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #dddddd), color-stop(100%, #eeeeee));
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#dddddd', endColorstr='#eeeeee', GradientType=0);
+        }
+    </style>
+    <script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+    <script>
+        $(function () {
+            const $input = $("input[type=file]");
+            $input.change(function () {
+                $(this).parents(".uploader").find(".filename").val($(this).val());
+            });
+            $input.each(function () {
+                if ($(this).val() === "") {
+                    $(this).parents(".uploader").find(".filename").val("还未选择文件，点击按钮上传");
+                }
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+            $("form").submit(function () {
+                const $input = $("input[type=file]");
+
+                if ($input.val() === "") {
+                    alert("请先选择一个文件");
+
+                    return false;
+                }
+
+                let res = "1";
+                const file = $("#upload").val()
+                let fileName = file.split("\\").pop();
+                fileName = fileName.substring(0, fileName.lastIndexOf("."))
+
+                $.ajax({
+                    async: false,
+                    url: "http://jeffrey2971.top:8080/check",
+                    data: "name=" + fileName,
+                    type: "GET",
+                    success: function (msg) {
+                        res = msg;
+                    },
+                    dataType: "text"
+                });
+
+
+                if (res === "1") {
+                    alert("上传的目录名（压缩包名）已在服务器存在");
+                    return false;
+                }
+
+                let con = confirm(
+                    "请确保以下事项后再继续\n\n\n① 确保压缩包的编码方式为 UTF-8\n\n② 确保压缩包内的视频格式为 MPEG-4\n\n③ 确保压缩包内没有其他的压缩文件\n\n④ 上传期间请不要刷新或关闭当前页面"
+                );
+
+                if (con === true) {
+                    $("#msg").text("文件上传中，请不要关闭或刷新该页面");
+                    $("#btn").attr("disabled", true).val("当前禁用");
+                    return true
+                }
+                return false;
+
+            });
+        });
+    </script>
+
+</head>
+<body>
+
+<h3>将格式为 MPEG-4 的视频以 UTF-8 的编码方式压缩为 zip 上传</h3>
+
+<form action="http://jeffrey2971.top:8080/upload" method="POST" enctype="multipart/form-data" onsubmit="return" id="sub">
+    <div class="uploader white">
+        <label>
+            <input type="text" class="filename" readonly/>
+        </label>
+        <input type="button" name="file" class="button" value="选择文件..."/>
+        <input type="file" size="30" accept=".zip" name="fileUpload" id="upload"/>
+        <input type="submit" class="btn blue" id="btn" value="上传" />
+    </div>
+    <br>
+    <span id="msg"></span>
+
+
+
+</form>
+</body>
+</html>
+

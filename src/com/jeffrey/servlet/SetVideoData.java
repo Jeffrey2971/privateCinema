@@ -17,14 +17,20 @@ import java.io.IOException;
  */
 
 
-public class SetMimeType extends HttpServlet {
+public class SetVideoData extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        String file = req.getParameter("file");
-        resp.setContentType(getServletContext().getMimeType(file));
-        resp.setContentLengthLong(new File(getServletContext().getRealPath(file)).length());
-        resp.setBufferSize(3145728);
-        req.getRequestDispatcher(file).forward(req,resp);
+        String arg = req.getParameter("file");
+        File file = new File(getServletContext().getRealPath(arg));
+        // 视频标题
+        req.setAttribute("title", file.getName());
+        // 视频播放地址
+        req.setAttribute("videoSrc", arg);
+        // 视频未播放时展示图片
+        req.setAttribute("videoPoster", "");
+        // 缩略图列表
+        req.setAttribute("previewList", "");
+        req.getRequestDispatcher("dynamic/jsp/desktopPluginExample.jsp").forward(req,resp);
     }
 }
