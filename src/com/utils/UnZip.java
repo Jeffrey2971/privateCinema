@@ -26,12 +26,16 @@ import java.util.zip.ZipFile;
     3 其他异常
     4 含有文件夹
     5 含有非 mp4
+    6 伪造压缩文件
  */
 public class UnZip {
 
     private static final int BUFFER_SIZE = 2 * 1024;
 
     public static int unZip(File srcFile, String destDirPath, Charset charset) throws RuntimeException {
+        if (!CheckZip.isArchiveFile(srcFile)) {
+            return 6;
+        }
         long start = System.currentTimeMillis();
         // 开始解压
         ZipFile zipFile = null;
@@ -56,18 +60,18 @@ public class UnZip {
                 if (entry.isDirectory()) {
                     String dirPath = destDirPath + File.separator + entry.getName();
                     File dir = new File(dirPath);
-                    if (dir.mkdirs()) {
-                        System.out.println("No need to create");
+                    if (!dir.mkdirs()) {
+                        return 3;
                     }
                 } else {
                     File targetFile = new File(destDirPath + File.separator + entry.getName());
                     if (!targetFile.getParentFile().exists()) {
-                        if (targetFile.getParentFile().mkdirs()) {
-                            System.out.println("No need to create");
+                        if (!targetFile.getParentFile().mkdirs()) {
+                            return 3;
                         }
                     }
-                    if (targetFile.createNewFile()) {
-                        System.out.println("No need to create");
+                    if (!targetFile.createNewFile()) {
+                        return 3;
                     }
                     is = zipFile.getInputStream(entry);
                     fos = new FileOutputStream(targetFile);

@@ -144,33 +144,40 @@
     <script>
         $(function () {
             $("form").submit(function () {
-                const $input = $("input[type=file]");
-
-                if ($input.val() === "") {
+                $.ajaxSettings.async = false;
+                if ($("input[type=file]").val() === "") {
                     alert("请先选择一个文件");
 
                     return false;
                 }
 
-                let res = "1";
-                const file = $("#upload").val()
-                let fileName = file.split("\\").pop();
+                const file = $("#upload");
+                let fileName = file.val().split("\\").pop();
                 fileName = fileName.substring(0, fileName.lastIndexOf("."))
 
-                $.ajax({
-                    async: false,
-                    url: "http://jeffrey2971.top:8080/check",
-                    data: "name=" + fileName,
-                    type: "GET",
-                    success: function (msg) {
-                        res = msg;
-                    },
-                    dataType: "text"
-                });
+                function checkFileName() {
+                    let res = true;
+                    $.get("http://jeffrey2971.top:8080/upload", "action=checkFileName&name=" + fileName, function (msg) {
+                        if (msg.status !== 0) {
+                            alert(msg.msg);
+                            res = false;
+                        }
+                    }, "json");
+                    return res;
+                }
 
+                function checkFileSize() {
+                    let res = true;
+                    $.get("http://jeffrey2971.top:8080/upload", "action=checkFileSize&name=" + fileName + "&size=" + file[0].files[0].size / (1024 * 1024), function (msg) {
+                        if (msg.status !== 0) {
+                            alert(msg.msg);
+                            res = false;
+                        }
+                    }, "json");
+                    return res;
+                }
 
-                if (res === "1") {
-                    alert("上传的目录名（压缩包名）已在服务器存在");
+                if (!checkFileName() || !checkFileSize()) {
                     return false;
                 }
 
@@ -194,21 +201,18 @@
 
 <h3>将格式为 MPEG-4 的视频以 UTF-8 的编码方式压缩为 zip 上传</h3>
 
-<form action="http://jeffrey2971.top:8080/upload" method="POST" enctype="multipart/form-data" onsubmit="return" id="sub">
+<form action="http://jeffrey2971.top:8080/upload?action=fileUpload" method="POST" enctype="multipart/form-data" onsubmit="return"
+      id="sub">
     <div class="uploader white">
         <label>
             <input type="text" class="filename" readonly/>
         </label>
         <input type="button" name="file" class="button" value="选择文件..."/>
         <input type="file" size="30" accept=".zip" name="fileUpload" id="upload"/>
-        <input type="submit" class="btn blue" id="btn" value="上传" />
+        <input type="submit" class="btn blue" id="btn" value="上传"/>
     </div>
     <br>
     <span id="msg"></span>
-
-
-
 </form>
 </body>
 </html>
-
