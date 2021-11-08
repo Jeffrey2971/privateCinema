@@ -2,7 +2,10 @@ package com.jeffrey.servlet;
 
 import com.google.gson.Gson;
 import com.jeffrey.pojo.Upload;
-import com.utils.UnZip;
+import com.jeffrey.service.UploadService;
+import com.jeffrey.service.impl.UploadServiceImpl;
+import com.jeffrey.utils.GetRequestAddress;
+import com.jeffrey.utils.UnZip;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
@@ -23,6 +26,7 @@ import java.util.List;
 public class UploadServlet extends BaseServlet {
 
     private static final Gson gson = new Gson();
+    protected static final UploadService UPLOAD_SERVICE = new UploadServiceImpl();
 
     protected void upload(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.sendRedirect("/static/html/upload.html");
@@ -107,7 +111,8 @@ public class UploadServlet extends BaseServlet {
                                 } else if (statusCode == 5) {
                                     writer.write(sdf.format(new Date()) + "：压缩包内含有非 MPEG-4 格式视频");
                                 } else if (statusCode == 6) {
-                                    writer.write(sdf.format(new Date()) + "：请不要上传伪压缩文件");
+                                    UPLOAD_SERVICE.addBlackListId(GetRequestAddress.getIPAddress(req));
+                                    resp.sendRedirect("https://baike.baidu.com/item/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E6%B3%95/16843044?fromtitle=%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E6%B3%95&fromid=12291792&fr=aladdin");
                                 }
                                 writer.flush();
                                 if (statusCode != 0) {

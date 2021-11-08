@@ -1,6 +1,6 @@
 package com.jeffrey.listener;
 
-import com.utils.GetRequestAddress;
+import com.jeffrey.utils.GetRequestAddress;
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.ServletRequestListener;
 import javax.servlet.http.HttpServletRequest;
