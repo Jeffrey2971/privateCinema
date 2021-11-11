@@ -1,4 +1,4 @@
-package com.utils;
+package com.jeffrey.utils;
 
 import com.jcraft.jsch.*;
 import org.apache.commons.lang3.StringUtils;

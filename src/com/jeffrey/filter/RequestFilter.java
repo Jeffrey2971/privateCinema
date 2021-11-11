@@ -1,7 +1,5 @@
 package com.jeffrey.filter;
 
-import com.jeffrey.dao.UploadServiceDao;
-import com.jeffrey.dao.impl.UploadServiceDaoImpl;
 import com.jeffrey.service.UploadService;
 import com.jeffrey.service.impl.UploadServiceImpl;
 import com.jeffrey.utils.GetRequestAddress;

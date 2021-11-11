@@ -17,25 +17,35 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>default</servlet-name>
-        <url-pattern>*.avi</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>default</servlet-name>
-        <url-pattern>*.flv</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>default</servlet-name>
         <url-pattern>*.html</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.jpg</url-pattern>
     </servlet-mapping>
 
     <listener>
         <listener-class>com.jeffrey.listener.RequestListener</listener-class>
+    </listener>
+    
+    <listener>
+        <listener-class>com.jeffrey.listener.ContextListener</listener-class>
     </listener>
 
     <servlet>
         <servlet-name>UploadServlet</servlet-name>
         <servlet-class>com.jeffrey.servlet.UploadServlet</servlet-class>
     </servlet>
+
+    <filter>
+        <filter-name>RequestFilter</filter-name>
+        <filter-class>com.jeffrey.filter.RequestFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>RequestFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
     <servlet-mapping>
         <servlet-name>UploadServlet</servlet-name>

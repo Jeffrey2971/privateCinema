@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" %>
 
 <html>
 <head>
@@ -32,7 +32,7 @@
 
 <body>
 <h3 style="text-align: center;">${title}</h3>
-<div id="mui-player" style="max-width: 700px;margin: auto"></div>
+<div id="mui-player" style="max-width: 650px;margin: auto"></div>
 </body>
 
 <script>
@@ -40,7 +40,7 @@
     config.plugins = [
         typeof MuiPlayerDesktopPlugin == 'function' ? new MuiPlayerDesktopPlugin({
             thumbnails:{ // 缩略图配置
-                preview:[${previewList}],
+                preview:${previewList},
                 tile:[10,10],
                 scale:[160,90],
             },

@@ -1,9 +1,6 @@
-package com.utils;
+package com.jeffrey.utils;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
@@ -53,6 +50,7 @@ public class UnZip {
                 } else if (unZipPathName.getName().contains("zip")) {
                     return 1;
                 } else if (!unZipPathName.getName().contains(".mp4")) {
+                    System.out.println(unZipPathName.getName());
                     return 5;
                 }
 
@@ -85,6 +83,35 @@ public class UnZip {
             }
             long end = System.currentTimeMillis();
             System.out.println("解压完成，耗时：" + (end - start) + " ms");
+
+            // 删除 MacOS 下压缩包附带的无用文件
+            File[] deleteFiles = new File(destDirPath).listFiles(new FileFilter() {
+                @Override
+                public boolean accept(File pathname) {
+                    return pathname.isDirectory();
+                }
+            });
+            if (deleteFiles != null) {
+
+                for (File deleteFile : deleteFiles) {
+                    File[] files = deleteFile.listFiles();
+                    if (files != null) {
+                        for (File item : files) {
+                            if (item.delete()) {
+                                System.out.println("移除 MacOS 压缩包附带无用文件：" + item.getName());
+                            }
+                        }
+                    }
+                }
+
+                for (File item : deleteFiles) {
+                    if (item.delete()) {
+                        System.out.println("移除空目录：" + item.getName());
+                    }
+                }
+            }
+
+
             return 0;
         } catch (Exception e) {
             if (e instanceof IllegalArgumentException) {

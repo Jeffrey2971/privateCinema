@@ -20,11 +20,13 @@ public class UploadServiceImpl implements UploadService {
 
     @Override
     public void addBlackListId(String ip) {
+        System.out.println("添加 ip 至黑名单");
         uploadServiceDao.addBlackListId(ip);
     }
 
     @Override
     public boolean isBlackUser(String ip) {
+        System.out.println("判断 ip 是否在黑名单内");
         return uploadServiceDao.isBlackUser(ip);
     }
 }
