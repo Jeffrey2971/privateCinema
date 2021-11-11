@@ -10,16 +10,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author jeffrey
- * @ClassName: VideoServlet
- * @Description:
- * @date: 2021/11/6 3:45 上午
- * @version:
- * @since JDK 1.8
- */
-
-
 public class VideoServlet extends BaseServlet {
 
     private static final ThumbnailService THUMBNAIL_SERVICE = new ThumbnailServiceImpl();

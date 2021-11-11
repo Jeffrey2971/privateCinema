@@ -1,15 +1,5 @@
 package com.jeffrey.service;
 
-/**
- * @author jeffrey
- * @ClassName: UploadService
- * @Description:
- * @date: 2021/11/8 2:35 上午
- * @version:
- * @since JDK 1.8
- */
-
-
 public interface UploadService {
     /**
      * 将恶意用户添加进黑名单

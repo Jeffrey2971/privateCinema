@@ -3,15 +3,6 @@ package com.jeffrey.utils;
 import java.io.File;
 import java.util.ArrayList;
 
-/**
- * @author jeffrey
- * @ClassName: ThumbnailOutPut
- * @Description: 使用 FFmpeg 转换视频格式
- * @date: 2021/10/28 12:03 上午
- * @version:
- * @since JDK 1.8
- */
-
 public class Transformation {
 
     private static final File WORK_PATH = new File("/usr/local/video/Data");

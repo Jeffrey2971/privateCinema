@@ -9,16 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * @author jeffrey
- * @ClassName: RequestFilter
- * @Description:
- * @date: 2021/11/8 2:33 上午
- * @version:
- * @since JDK 1.8
- */
-
-
 public class RequestFilter implements Filter {
 
     private static final UploadService UPLOAD_SERVICE = new UploadServiceImpl();

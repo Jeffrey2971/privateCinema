@@ -1,15 +1,5 @@
 package com.jeffrey.pojo;
 
-/**
- * @author jeffrey
- * @ClassName: CheckName
- * @Description:
- * @date: 2021/11/5 10:36 下午
- * @version:
- * @since JDK 1.8
- */
-
-
 public class Upload {
     private int status;
     private String msg;

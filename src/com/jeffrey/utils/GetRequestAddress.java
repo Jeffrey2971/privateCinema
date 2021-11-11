@@ -2,14 +2,6 @@ package com.jeffrey.utils;
 
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * @author jeffrey
- * @ClassName: GetRequestAddress
- * @Description: 获取请求的 ip 地址
- * @date: 2021/8/30 8:35 下午
- * @version:
- * @since JDK 1.8
- */
 public class GetRequestAddress {
     public static String getIPAddress(HttpServletRequest request) {
         String ip = null;    //X-Forwarded-For：Squid 服务代理

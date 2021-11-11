@@ -10,16 +10,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
 
-/**
- * @author jeffrey
- * @ClassName: ThumbnailServiceDaoImpl
- * @Description:
- * @date: 2021/11/8 7:20 下午
- * @version:
- * @since JDK 1.8
- */
-
-
 public class ThumbnailServiceDaoImpl implements ThumbnailServiceDao {
     private final QueryRunner queryRunner = new QueryRunner();
 

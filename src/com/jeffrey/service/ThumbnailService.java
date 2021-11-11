@@ -3,16 +3,6 @@ package com.jeffrey.service;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * @author jeffrey
- * @ClassName: ThumbnailService
- * @Description:
- * @date: 2021/11/7 2:05 下午
- * @version:
- * @since JDK 1.8
- */
-
-
 public interface ThumbnailService {
 
     /**

@@ -8,14 +8,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
-/**
- * @author jeffrey
- * @ClassName: JdbcUtils
- * @Description:
- * @date: 2021/4/27 5:33 下午
- * @version:
- * @since JDK 1.8
- */
 public class JdbcUtils {
 
     private static DataSource dataSource;

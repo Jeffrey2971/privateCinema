@@ -3,16 +3,6 @@ package com.jeffrey.dao;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * @author jeffrey
- * @ClassName: ThumbnailServiceDao
- * @Description:
- * @date: 2021/11/8 2:34 上午
- * @version:
- * @since JDK 1.8
- */
-
-
 public interface ThumbnailServiceDao {
     /**
      * 获取所有 md5

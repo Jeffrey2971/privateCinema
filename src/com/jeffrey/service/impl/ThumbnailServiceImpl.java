@@ -6,16 +6,6 @@ import com.jeffrey.service.ThumbnailService;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * @author jeffrey
- * @ClassName: ThumbnailServiceImpl
- * @Description:
- * @date: 2021/11/7 2:07 下午
- * @version:
- * @since JDK 1.8
- */
-
-
 public class ThumbnailServiceImpl implements ThumbnailService {
 
     private static final ThumbnailServiceDao THUMBNAIL_SERVICE_DAO = new ThumbnailServiceDaoImpl();
