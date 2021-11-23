@@ -16,7 +16,6 @@ public class UploadServiceImpl implements UploadService {
 
     @Override
     public boolean isBlackUser(String ip) {
-        System.out.println("判断 ip 是否在黑名单内");
         return uploadServiceDao.isBlackUser(ip);
     }
 }

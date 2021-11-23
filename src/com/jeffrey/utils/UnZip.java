@@ -75,12 +75,7 @@ public class UnZip {
             System.out.println("解压完成，耗时：" + (end - start) + " ms");
 
             // 删除 MacOS 下压缩包附带的无用文件
-            File[] deleteFiles = new File(destDirPath).listFiles(new FileFilter() {
-                @Override
-                public boolean accept(File pathname) {
-                    return pathname.isDirectory();
-                }
-            });
+            File[] deleteFiles = new File(destDirPath).listFiles(File::isDirectory);
             if (deleteFiles != null) {
 
                 for (File deleteFile : deleteFiles) {
@@ -100,8 +95,6 @@ public class UnZip {
                     }
                 }
             }
-
-
             return 0;
         } catch (Exception e) {
             if (e instanceof IllegalArgumentException) {
