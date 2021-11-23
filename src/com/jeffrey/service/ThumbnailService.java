@@ -1,6 +1,5 @@
 package com.jeffrey.service;
 
-import java.util.HashMap;
 import java.util.List;
 
 public interface ThumbnailService {
@@ -30,9 +29,9 @@ public interface ThumbnailService {
     void truncateData();
 
     /**
-     * 服务器初始化时写入的数据
-     * @param dataMap key : 写入文件 md5 value : 对应文件缩略图
-     * @return 是否添入成功
+     * 插入单条数据，该 Object[] 类型的数组只有两个人值，obj[0] 文件名 obj[1] 缩略图列表
+     * @param obj obj[]
      */
-    boolean initData(HashMap<String, String> dataMap);
+    void addData(Object[] obj);
+
 }

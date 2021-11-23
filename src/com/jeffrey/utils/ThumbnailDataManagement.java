@@ -4,7 +4,6 @@ import com.jeffrey.service.ThumbnailService;
 import com.jeffrey.service.impl.ThumbnailServiceImpl;
 import java.io.*;
 import java.util.*;
-import java.util.HashMap;
 import java.util.List;
 
 public class ThumbnailDataManagement {
@@ -37,9 +36,9 @@ public class ThumbnailDataManagement {
     public static void createThumbnail(List<File> lists, String thumbnailPath) {
 
         // 用于存放写入到数据库中的数据，key 文件名（去掉空格），value 为该视频的缩略图列表
-        HashMap<String, String> dataMap = new HashMap<>();
+        Object[] data = new Object[2];
 
-        // 忽略文件，在每次存放值到 dataMap 后加入，防止 dataMap 数据重复，前端获取缩略图重复
+        // 忽略文件，在每次存放值到 data 后加入，防止 data 数据重复，前端获取缩略图重复
         ArrayList<String> ignoreFile = new ArrayList<>();
 
         // 遍历找到的视频，计算出 md5 以及对应的缩略图列表
@@ -51,18 +50,16 @@ public class ThumbnailDataManagement {
 
                     Runtime.getRuntime().exec(new String[]{"ffmpeg", "-i", item.toString(), "-vsync", "vfr", "-vf", "select=isnan(prev_selected_t)+gte(t-prev_selected_t\\,1),scale=160:90,tile=10x10", "-qscale:v", "3", "" + targetFolder + "/" + getDiffTimeMillis(System.currentTimeMillis()) + "%03d.jpg", "-loglevel", "quiet"}).waitFor();
 
-                    String[] files = targetFolder.list(new FilenameFilter() {
-                        @Override
-                        public boolean accept(File dir, String name) {
-                            return name.endsWith("jpg") && !ignoreFile.contains(name);
-                        }
-                    });
+                    String[] files = targetFolder.list((dir, name) -> name.endsWith("jpg") && !ignoreFile.contains(name));
                     if (files != null) {
                         for (int i = 0; i < files.length; i++) {
                             ignoreFile.add(files[i]);
                             files[i] = "\"/static/thumbnail/" + files[i] + "\"";
                         }
-                        dataMap.put(item.getName().replace(" ", ""), Arrays.toString(files));
+                        data[0] = item.getName().replace(" ", "");
+                        data[1] = Arrays.toString(files);
+
+                        THUMBNAIL_SERVICE.addData(data);
                     }
                 } else {
                     throw new RuntimeException("创建存储缩略图目录失败，初始化失败");
@@ -71,8 +68,6 @@ public class ThumbnailDataManagement {
                 e.printStackTrace();
             }
         }
-
-        THUMBNAIL_SERVICE.initData(dataMap);
     }
 
     /**

@@ -1,6 +1,5 @@
 package com.jeffrey.dao;
 
-import java.util.HashMap;
 import java.util.List;
 
 public interface ThumbnailServiceDao {
@@ -22,12 +21,7 @@ public interface ThumbnailServiceDao {
      */
     void truncateData();
 
-    /**
-     * 服务器初始化时写入的数据
-     * @param dataMap key : 写入文件 md5 value : 对应文件缩略图
-     * @return 是否添入成功
-     */
-    boolean initData(HashMap<String, String> dataMap);
+    void data(Object[] obj);
 
     /**
      * 根据传递的 name 属性删除对应的缩略图

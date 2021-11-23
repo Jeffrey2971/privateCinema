@@ -3,7 +3,6 @@ package com.jeffrey.service.impl;
 import com.jeffrey.dao.ThumbnailServiceDao;
 import com.jeffrey.dao.impl.ThumbnailServiceDaoImpl;
 import com.jeffrey.service.ThumbnailService;
-import java.util.HashMap;
 import java.util.List;
 
 public class ThumbnailServiceImpl implements ThumbnailService {
@@ -35,9 +34,9 @@ public class ThumbnailServiceImpl implements ThumbnailService {
     }
 
     @Override
-    public boolean initData(HashMap<String, String> dataMap) {
+    public void addData(Object[] obj) {
         System.out.println("批量插入数据");
-        return THUMBNAIL_SERVICE_DAO.initData(dataMap);
+        THUMBNAIL_SERVICE_DAO.data(obj);
     }
 
 
