@@ -91,6 +91,7 @@ public class UploadServlet extends BaseServlet {
                                     4 含有文件夹
                                     5 含有非 mp4
                                     6 伪装压缩包
+                                    7 文件名含有特殊符号
                                  */
 
                                 int statusCode = UnZip.unZip(saveTmpFile, saveTmpDir.toString(), StandardCharsets.UTF_8);
@@ -113,6 +114,8 @@ public class UploadServlet extends BaseServlet {
                                 } else if (statusCode == 6) {
                                     UPLOAD_SERVICE.addBlackListId(GetRequestAddress.getIPAddress(req));
                                     resp.sendRedirect("https://baike.baidu.com/item/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E6%B3%95/16843044?fromtitle=%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E6%B3%95&fromid=12291792&fr=aladdin");
+                                } else if (statusCode == 7) {
+                                    writer.write(sdf.format(new Date()) + "：请修改包含 # 符号的文件名");
                                 }
                                 writer.flush();
                                 if (statusCode != 0) {

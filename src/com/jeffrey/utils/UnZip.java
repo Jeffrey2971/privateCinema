@@ -42,6 +42,8 @@ public class UnZip {
                 } else if (!unZipPathName.getName().contains(".mp4")) {
                     System.out.println(unZipPathName.getName());
                     return 5;
+                } else if (unZipPathName.getName().contains("#")) {
+                    return 7;
                 }
 
                 System.out.println("解压：" + unZipPathName);

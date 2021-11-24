@@ -22,7 +22,6 @@ public class ThumbnailServiceImpl implements ThumbnailService {
 
     @Override
     public boolean equalsName(String name) {
-        System.out.println("检查新增文件是否存在");
         return THUMBNAIL_SERVICE_DAO.equalsName(name);
 
     }
@@ -35,7 +34,7 @@ public class ThumbnailServiceImpl implements ThumbnailService {
 
     @Override
     public void addData(Object[] obj) {
-        System.out.println("批量插入数据");
+        System.out.println("插入数据");
         THUMBNAIL_SERVICE_DAO.data(obj);
     }
 

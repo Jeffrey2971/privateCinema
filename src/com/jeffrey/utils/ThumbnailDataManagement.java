@@ -2,6 +2,7 @@ package com.jeffrey.utils;
 
 import com.jeffrey.service.ThumbnailService;
 import com.jeffrey.service.impl.ThumbnailServiceImpl;
+
 import java.io.*;
 import java.util.*;
 import java.util.List;
@@ -17,25 +18,30 @@ public class ThumbnailDataManagement {
      * @param realPath 服务器工作绝对路径
      */
     public static void deleteData(String fileName, String realPath) {
-
-        List<String> thumbnailList = THUMBNAIL_SERVICE.getThumbnailList(fileName.replace(" ", ""));
-        for (String file : thumbnailList) {
-            if (new File(realPath + "/" + file.replace("\"", "")).delete()) {
-                System.out.println("移除缩略图：" + file);
+        try {
+            List<String> thumbnailList = THUMBNAIL_SERVICE.getThumbnailList(fileName.replace(" ", ""));
+            for (String file : thumbnailList) {
+                if (new File(realPath + "/" + file.replace("\"", "")).delete()) {
+                    System.out.println("移除缩略图：" + file);
+                }
             }
+
+            THUMBNAIL_SERVICE.delete(fileName.replace(" ", ""));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        THUMBNAIL_SERVICE.delete(fileName.replace(" ", ""));
     }
 
 
     /**
      * 根据传递的视频文件列表创建每个视频对应的缩略图
-     * @param lists 视频列表
+     *
+     * @param lists         视频列表
      * @param thumbnailPath /static/thumbnailPath
      */
     public static void createThumbnail(List<File> lists, String thumbnailPath) {
 
-        // 用于存放写入到数据库中的数据，key 文件名（去掉空格），value 为该视频的缩略图列表
+        // 用于存放写入到数据库中的数据，obj[0] 文件名（去掉空格），obj[1] value 为该视频的缩略图列表
         Object[] data = new Object[2];
 
         // 忽略文件，在每次存放值到 data 后加入，防止 data 数据重复，前端获取缩略图重复
@@ -72,6 +78,7 @@ public class ThumbnailDataManagement {
 
     /**
      * 传递一个时间戳返回一个不一样的时间戳
+     *
      * @param time 时间戳
      * @return 时间戳
      */
@@ -86,6 +93,7 @@ public class ThumbnailDataManagement {
 
     /**
      * 用于避免在添加文件时和目录重复
+     *
      * @param name 添加的文件名
      * @return 在数据库是否存在
      */
