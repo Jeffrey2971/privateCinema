@@ -15,7 +15,8 @@ public class UploadServiceImpl implements UploadService {
     }
 
     @Override
-    public boolean isBlackUser(String ip) {
-        return uploadServiceDao.isBlackUser(ip);
+    public boolean isExistsTable(String ip, String table) {
+        return uploadServiceDao.isExistsTable(ip, table);
     }
+
 }

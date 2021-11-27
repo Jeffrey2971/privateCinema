@@ -8,9 +8,10 @@ public interface UploadService {
     void addBlackListId(String ip);
 
     /**
-     * 根据给定的 ip 判断是否为违规 IP
-     * @param ip 请求 IP 地址
-     * @return 是否违规
+     * 判断给定的 IP 是否在给定的表内
+     * @param ip 请求的 IP 地址
+     * @param table 指定的表名
+     * @return 给定的 IP 是否在指定的表内
      */
-    boolean isBlackUser(String ip);
+    boolean isExistsTable(String ip, String table);
 }

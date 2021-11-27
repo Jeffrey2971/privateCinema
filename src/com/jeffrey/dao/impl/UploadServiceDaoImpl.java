@@ -29,9 +29,9 @@ public class UploadServiceDaoImpl implements UploadServiceDao {
     }
 
     @Override
-    public boolean isBlackUser(String ip) {
+    public boolean isExistsTable(String ip, String table) {
         Connection connection = null;
-        String sql = "SELECT ip FROM black_list WHERE ip = ?";
+        String sql = "SELECT ip FROM " + table + " WHERE ip = ?";
         try {
             connection = JdbcUtils.getConnection();
             return queryRunner.query(connection, sql, new ScalarHandler<>("ip"), ip) != null;
